@@ -1,22 +1,18 @@
 from django.shortcuts import render
 from channels.layers import get_channel_layer
+from django.http import JsonResponse
 from .consumers import *
+from .thread import *
 import time
 import json
 
 # Create your views here.
 
 async def index(request):
-    # for i in range(1, 10):
-    #     channel_layer = get_channel_layer()
-    #     data = {'count' : i}
-    #     await (channel_layer.group_send)(
-    #         'new_consumer_group', {
-    #             'type' : 'send_fun',
-    #             'value' : json.dumps(data)
-    #         }
-    #     )
-    #     time.sleep(1)
     return render(request, 'index.html')
 
 
+def generate_student_data(request):
+    total = request.GET.get('total')
+    CreateStudentsThread(int(total)).start()
+    return JsonResponse({"status" : 200})

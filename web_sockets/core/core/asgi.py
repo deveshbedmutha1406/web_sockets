@@ -22,5 +22,6 @@ ws_patterns = [
 ]
 
 application = ProtocolTypeRouter({
+    "http": get_asgi_application(),
     'websocket': URLRouter(ws_patterns),
 })

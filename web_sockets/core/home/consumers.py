@@ -41,12 +41,13 @@ class NewConsumer(AsyncJsonWebsocketConsumer):
         await self.send(text_data=json.dumps({"status" : "connected from async"}))
 
     async def receive(self, text_data):
-        pass
+        print(text_data)
+        await self.send(text_data=json.dumps(text_data))
 
     async def disconnect(self, *args, **kwargs):
-        pass
+        print("Disconnected")
 
-    async def send_fun(self, event):
+    async def send_fun1(self, event):
         var = json.loads(event.get('value'))  # convert to json.
         await self.send(text_data=json.dumps({'payload': var}))  # send in string form use json.dumps.
 
